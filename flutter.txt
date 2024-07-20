@@ -1,0 +1,276 @@
+// ignore_for_file: slash_for_doc_comments
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'widgets/button.dart';
+import 'widgets/card.dart';
+
+// ROOT
+void main() {
+  runApp(const App());
+}
+
+//  * APP
+//  * StatelessWidget은 stl을 입력하면 자동으로 전체 구조를 입력할 수 있습니다.
+//  * 모든 것은 위젯이다. 블록처럼 위젯에 위젯을 쌓아가며 앱을 만드는 것.
+//  * 위젯은 외우지 말고 찾아보며 사용하자. -> https://docs.flutter.dev/development/ui/widgets
+//  * 모든 위젯은 build 메서드를 사용해야한다.(build 또한 자동 완성 가능)
+//  * 모든 앱은 CupertinoApp 혹은 MaterialApp 중에 선택해야 하는데, materialapp이 훨씬 보기 좋으니 MaterialApp을 쓰자.
+//  * 모든 화면은 Scaffold(구조)를 가져야 한다.
+//  * ANDROID : MaterialApp and IOS : CupertinoApp
+// class App extends StatelessWidget {
+//   const App({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         backgroundColor: const Color(0xFF181818),
+//         body: SingleChildScrollView(
+//           child: Padding(
+//             padding: const EdgeInsets.symmetric(horizontal: 20),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 const SizedBox(
+//                   height: 65,
+//                 ),
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.end,
+//                   children: [
+//                     Column(
+//                       crossAxisAlignment: CrossAxisAlignment.end,
+//                       children: [
+//                         const Text(
+//                           "Hey, Selena",
+//                           style: TextStyle(
+//                               color: Colors.white,
+//                               fontSize: 36,
+//                               fontWeight: FontWeight.w800),
+//                         ),
+//                         Text(
+//                           "Welcome back",
+//                           style:
+//                               TextStyle(color: Colors.white.withOpacity(0.8)),
+//                         ),
+//                       ],
+//                     ),
+//                   ],
+//                 ),
+//                 const SizedBox(
+//                   height: 40,
+//                 ),
+//                 Text(
+//                   "Total Balance",
+//                   style: TextStyle(
+//                     fontSize: 22,
+//                     color: Colors.white.withOpacity(0.8),
+//                   ),
+//                 ),
+//                 const SizedBox(
+//                   height: 5,
+//                 ),
+//                 const Text(
+//                   "\$5 194 482",
+//                   style: TextStyle(
+//                     fontSize: 42,
+//                     fontWeight: FontWeight.w600,
+//                     color: Colors.white,
+//                   ),
+//                 ),
+//                 const SizedBox(
+//                   height: 25,
+//                 ),
+//                 const Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [
+//                     Button(
+//                       text: "Transfer",
+//                       bgColor: Color(0xFFF1B33B),
+//                       textColor: Colors.black,
+//                     ),
+//                     Button(
+//                       text: "Request",
+//                       bgColor: Color(0xFF1F2123),
+//                       textColor: Colors.white,
+//                     ),
+//                   ],
+//                 ),
+//                 const SizedBox(
+//                   height: 40,
+//                 ),
+//                 Row(
+//                   crossAxisAlignment: CrossAxisAlignment.end,
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [
+//                     const Text(
+//                       "Wallets",
+//                       style: TextStyle(
+//                         color: Colors.white,
+//                         fontSize: 48,
+//                         fontWeight: FontWeight.w600,
+//                       ),
+//                     ),
+//                     Text(
+//                       "View all",
+//                       style: TextStyle(
+//                         color: Colors.white.withOpacity(0.8),
+//                         fontSize: 18,
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//                 const SizedBox(
+//                   height: 20,
+//                 ),
+//                 const CurrencyCard(
+//                   name: "Euro",
+//                   code: "EUR",
+//                   amount: "6 428",
+//                   icon: Icons.euro_rounded,
+//                   isInverted: false,
+//                   dy: 0,
+//                 ),
+//                 const CurrencyCard(
+//                   name: "Dollar",
+//                   code: "USD",
+//                   amount: "77 628",
+//                   icon: Icons.monetization_on_outlined,
+//                   isInverted: true,
+//                   dy: -25,
+//                 ),
+//                 const CurrencyCard(
+//                   name: "Bitcoin",
+//                   code: "BTC",
+//                   amount: "6 428",
+//                   icon: Icons.currency_bitcoin_rounded,
+//                   isInverted: false,
+//                   dy: -45,
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// 위젯에 대한 부분
+/**
+ * StatefulWidget은 Flutter에서 동적인 사용자 인터페이스를 구현하기 위해 사용되는 위젯 클래스입니다. 
+ * 주요 특징은 다음과 같습니다:
+ * 변경 가능한 상태(state)를 가집니다. 
+ * 이 상태는 위젯의 생명주기 동안 변경될 수 있으며, UI에 반영됩니다.
+ * StatefulWidget 클래스와 State 클래스, 두 개의 클래스로 구성됩니다. 
+ * StatefulWidget 클래스는 위젯을 정의하고, State 클래스는 위젯의 상태를 관리합니다.
+ * setState() 메서드를 사용하여 상태 변경을 프레임워크에 알립니다. 
+ * 이 메서드가 호출되면 Flutter는 위젯을 다시 그립니다.
+ * 실시간으로 업데이트되는 UI 요소를 포함하는 화면에 사용됩니다. 
+ * 예를 들어, 체크박스, 라디오 버튼, 텍스트 입력 필드, 게임 점수 등이 있습니다.
+ * StatelessWidget에 비해 성능이 다소 떨어질 수 있지만, 동적인 UI를 구현하는 데 필수적입니다.
+ * 위젯의 상태가 변경될 때마다 build 메서드가 다시 호출되어 UI가 업데이트됩니다.
+ * StatefulWidget은 사용자 상호작용, 데이터 변경 등으로 인해 화면의 일부가 동적으로 변경되어야 할 때 사용됩니다. 
+ * 이를 통해 Flutter 앱에서 반응형이고 동적인 사용자 인터페이스를 구현할 수 있습니다.
+ * 
+ * BuildContext
+ * BuildContext는 Flutter에서 매우 중요한 개념입니다.
+ * 위젯 트리에서 현재 위젯의 위치와 정보를 나타내는 객체입니다. 
+ * 주요 특징은 다음과 같습니다:
+ * 1. 위젯 트리 위치 식별: BuildContext는 위젯 트리에서 특정 위젯의 위치를 식별하는 핸들 역할을 합니다.
+ * 2. 위젯 정보 제공: 현재 빌드에 대한 정보를 저장하며, 기기 화면 크기, 픽셀 밀도, 현재 활성화된 테마 등의 정보를 제공합니다.
+ * 3. 부모 위젯 정보 접근: BuildContext를 통해 하위 위젯에서 부모 위젯의 정보에 접근할 수 있습니다.
+ * 4. 위젯 트리 탐색: BuildContext를 사용하여 위젯 트리에서 특정 위젯을 찾거나, 부모 위젯과 자식 위젯에 대한 참조를 얻을 수 있습니다.
+ * 5. 위젯 간 정보 공유: BuildContext를 통해 위젯 간에 데이터나 상태를 공유할 수 있으며, 이를 이용해 상태 관리 패턴을 구현할 수 있습니다.
+ * 6. 고유성: 각 위젯은 자신만의 BuildContext를 가지며, 이는 해당 위젯의 build 메서드에 전달됩니다.
+ * BuildContext는 주로 build 메서드 내에서 사용되며, 위젯의 구성, 스타일링
+ * 그리고 다른 위젯과의 상호작용에 필요한 정보를 제공합니다. 
+ * 이를 통해 Flutter 앱의 UI를 동적으로 구성하고 관리할 수 있습니다.
+ * 
+ * 위젯의 라이프사이클
+ * Flutter에서 위젯의 라이프사이클은 위젯이 생성되고, 업데이트되고, 파괴되는 과정을 포함합니다. 특히, StatefulWidget의 경우, 상태(State)를 관리하기 때문에 더 복잡한 라이프사이클을 가집니다. 주요 단계와 각 단계에서 호출되는 메서드는 다음과 같습니다:
+ * 1. createState()
+ * * StatefulWidget이 생성될 때 호출됩니다.
+ * * State 객체를 생성하여 반환합니다.
+ * 2. initState()
+ * * State 객체가 처음 생성될 때 한 번 호출됩니다.
+ * * 초기화 작업을 수행할 수 있는 곳입니다.
+ * 3. didChangeDependencies()
+ * * State 객체의 종속성이 변경될 때 호출됩니다.
+ * * initState() 이후에도 여러 번 호출될 수 있습니다.
+ * 4. build()
+ * * 위젯 트리를 구성하는 메서드입니다.
+ * * 상태가 변경될 때마다 호출되며, UI를 다시 그립니다.
+ * 5. didUpdateWidget()
+ * * 부모 위젯이 변경되어 해당 위젯이 업데이트될 때 호출됩니다.
+ * * 이전 위젯과 새로운 위젯을 비교하여 필요한 업데이트를 수행합니다.
+ * 6. setState()
+ * * 상태를 변경하고, build() 메서드를 다시 호출하도록 합니다.
+ * * UI를 갱신하는 데 사용됩니다.
+ * 7. deactivate()
+ * * State 객체가 위젯 트리에서 제거될 때 호출됩니다.
+ * * 위젯이 화면에서 사라질 때 호출되며, 재사용될 가능성이 있습니다.
+ * 8. dispose()
+ * * State 객체가 완전히 제거될 때 호출됩니다.
+ * * 리소스를 해제하거나 정리할 때 사용됩니다.
+ * 9. mounted
+ * * State 객체가 위젯 트리에 추가되었는지 여부를 나타내는 속성입니다.
+ * * 객체가 위젯 트리에 추가되면 mounted는 true가 되고, 제거되면 false가 됩니다.
+ * 이러한 라이프사이클 메서드들을 이해하고 적절히 활용하면, Flutter에서 동적인 UI를 효과적으로 관리할 수 있습니다
+ */
+class App extends StatefulWidget {
+  const App({super.key});
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  // List<int> numbers = [];
+
+  // // int counter = 0;
+  // void onClicked() {
+  //   setState(() {
+  //     // counter = counter + 1;
+  //     numbers.add(numbers.length);
+  //   });
+  // }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: const Color(0xFFF4EDDB),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Click Count",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              // for (var n in numbers) Text("$n"),
+              // Text(
+              //   "$counter",
+              //   style: const TextStyle(
+              //     fontSize: 30,
+              //   ),
+              // ),
+              IconButton(
+                iconSize: 40,
+                onPressed: onClicked,
+                icon: const Icon(Icons.add_box_rounded),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+---------------------------------------------------------------

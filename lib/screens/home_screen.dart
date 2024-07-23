@@ -1,5 +1,6 @@
 import 'package:basic/models/webtoon_model.dart';
 import 'package:basic/services/api_service.dart';
+import 'package:basic/widgets/webtoon_widget.dart';
 import 'package:flutter/material.dart';
 
 // 비동기 위젯 (비동기로 api를 통제하는 위젯)
@@ -60,41 +61,10 @@ class HomeScreen extends StatelessWidget {
         ),
         itemBuilder: (context, index) {
           var webtoon = snapshot.data![index];
-          return Column(
-            children: [
-              Container(
-                width: 250,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 15,
-                      offset: const Offset(8, 8),
-                      color: Colors.black.withOpacity(0.5),
-                    )
-                  ],
-                ),
-                clipBehavior: Clip.hardEdge,
-                child: Image.network(
-                  webtoon.thumb,
-                  headers: const {
-                    'User-Agent':
-                        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
-                    'Referer': 'https://comic.naver.com',
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                webtoon.title,
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ],
+          return Webtoon(
+            title: webtoon.title,
+            thumb: webtoon.thumb,
+            id: webtoon.id,
           );
         },
         separatorBuilder: (context, index) => const SizedBox(
